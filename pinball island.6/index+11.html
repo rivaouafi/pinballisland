@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>pinball island</title>
+     <meta charset="utf-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+ <meta name="author" content="ridha ouafi">
+    
+    
+    <style>  
+    
+            * {
+  box-sizing: border-box;
+}
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+.header1 {
+ display: flex;
+ flex-wrap: wrap;
+  
+ font-size: 1em;
+ color: white;
+ background-color: green;
+ border: 1px solid springgreen;
+ padding: 2px;
+} 
+.header2 {
+ display: flex;
+ flex-wrap: wrap;
+ 
+  font-size:3em;
+  color: white;
+  
+ background-color: black;
+ border: 1px solid springgreen;
+ padding: 10px;
+}
+
+ .footer {  
+ display: flex;
+ flex-wrap: wrap; 
+justify-content: center;
+ background-color: black;
+ border: 2px solid springgreen;
+ padding: 10px;
+ color: white;
+ text-align: center;
+ font-size: 1em;
+ position: fixed;
+ bottom: 0;
+ width: 97%;
+ }
+ /* Six buttons with code link to some pages in this project */
+ .button-group {
+ display: flex;
+ flex-wrap: wrap;
+ justify-content: center;
+ align-items: center;
+ margin-top: 20px;
+ }
+ .button {
+ display: inline-block;
+ padding: 4px;
+ margin: 4px;
+ background-color: GREEN;
+ color: white;
+ border: 1px solid black;
+ border-radius: 4px;
+ font-size: 1em;
+ text-align: center;
+ text-decoration: none;
+ }
+
+ /* Fixed background */
+ body { 
+
+   background-color: #FFFFFF;
+   background-image: url('ball21.jpg');
+   background-attachment: fixed;
+   background-position: center center;
+   background-repeat: repeat;
+   background-size: 100% 100%;
+   color: #000000;
+   font-family: Arial;
+   font-weight: normal;
+   font-size: 13px;
+   line-height: 1.1875;
+   margin: 0;
+   padding: 0;
+
+ 
+ }
+
+
+
+
+        #gameArea {
+            width: 1000px;
+            height: 530px;
+            background-color: transparent;
+            border: 1px solid skyblue;
+            position: relative;
+        }
+
+            #bar1, #bar2 {
+            position: absolute;
+            width: 20px;
+            height: 160px;
+            background-color: skyblue;
+            border: 1px solid blue;
+        }
+        #bar1 {
+            left: 0;
+        }
+        #bar2 {
+            right: 0;
+        }
+        #character {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: white;
+        }
+
+         .enemy {
+      position:absolute;
+
+      width: 100px;
+            height: 100px;
+            background-image: url('enemy1.png');
+            top: 0px;
+           left: 50%;
+
+              animation: move-enemy 3s infinite;
+    }
+ @keyframes move-enemy {
+        0% {
+            transform: translate(0, 0);
+        }
+        25% {
+            transform: translate(100px, 100px);
+        }
+        50% {
+            transform: translate(0, 0px);
+        }
+        75% {
+            transform: translate(-100px, 100px);
+        }
+        100% {
+            transform: translate(0, 0);
+        }
+
+        }
+
+
+         /* Flexible layout responsive design */
+
+ .header1 {
+ font-size: 0.5em;
+ padding: 2px;
+ }
+ /* Big red header with red border */
+ .header2 {
+ font-size: 4em;
+ padding: 2px;
+ }
+ /* Six buttons with code link to some pages in this project */
+ .button-group {
+ margin-top: 10px;
+ }
+ .button {
+ padding: 5px;
+ margin: 5px;
+ font-size: 1em;
+ }
+
+
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.column {
+  flex: 100%;
+
+  padding: 5px;
+}
+.column img {
+
+  width: 100%;
+  height: auto;
+
+      }
+@media screen and (max-width: 600px) {
+  .column {
+
+    width: 100%;
+  }
+
+
+}
+
+
+    </style>
+</head>
+<body>
+
+
+
+ <div class="button-group">
+ <a href="index.html" class="button">introduction</a>
+ <a href="index.html" class="button">index</a>
+ <a href="index.html" class="button">topics</a>
+ <a href="about.html" class="button">about</a>
+ <a href="https://linkmovies.netlify.app" class="button">blog</a>
+ <a href="https://www.facebook.com/toni.romanov.92" class="button">contact</a>
+  </DIV>
+
+
+    <div class="row">
+
+
+    <div id="gameArea">
+
+                   <div id="bar1"></div>
+        <div id="bar2"></div>
+              <div class="score">  </div>
+
+        <div id="character">  </div>
+
+
+         </div>
+
+
+      <script>
+var bar1 = document.getElementById("bar1");
+var x = 0;
+var y = 0;
+
+// Get the window width and height
+let windowWidth = window.innerWidth;
+let windowHeight = window.innerHeight;
+// Set the initial speed and direction
+let speed = 3;
+let dx = 0;
+let dy = 0;
+  let scorem = 0;
+document.addEventListener("keydown", function(event) {
+    // Get the key code
+    let key = event.keyCode;
+    // Set the speed and direction based on the arrow keys
+    if (key == 37) { // Left arrow
+
+        dy = 0;
+
+
+    } else if (key == 39) { // Right arrow
+
+        dy = 0;
+
+
+    }
+    if (key == 38) { // Up arrow
+                dx = 0;
+                dy = -speed;
+
+            }
+         if (key == 40) { // Down arrow
+                dx = 0;
+                dy = +speed;
+
+        }
+
+});
+// Add an event listener for keyup events
+document.addEventListener("keyup", function(event) {
+    // Stop the movement when the arrow keys are released
+    dx = 0;
+    dy = 0;
+});
+// Define a function to update the character position
+function update() {
+    // Get the current position of the character
+    let x = bar1.offsetLeft;
+    let y = bar1.offsetTop;
+    // Add the speed and direction to the position
+    x += dx;
+    y += dy;
+    // Wrap around the window edges
+    if (x < 0) {
+        x = windowWidth - bar1.offsetWidth;
+    } else if (x > windowWidth - bar1.offsetWidth) {
+        x = 0;
+    }
+    if (y < 0) {
+        y = windowHeight - bar1.offsetHeight;
+    } else if (y > windowHeight - bar1.offsetHeight) {
+        y = 0;
+    }
+
+
+
+
+
+    // Set the new position of the character
+    bar1.style.left = x + "px";
+    bar1.style.top = y + "px";
+    // Request the next animation frame
+    requestAnimationFrame(update);
+}
+// Start the animation loop
+update();
+</script>
+
+
+
+
+    <script>
+        var character = document.getElementById("character");
+        var gameArea = document.getElementById("gameArea");
+
+        var score = 0;
+
+
+          var scoreElement = document.createElement("div");
+    scoreElement.style.position = "absolute";
+    scoreElement.style.top = "50px";
+    scoreElement.style.right = "300px";
+    scoreElement.style.fontSize = "20px";
+    scoreElement.style.color = "BLACK";
+    scoreElement.innerHTML = "Score: " + score;
+              document.body.appendChild(scoreElement);
+
+            var enemies = [];
+        var enemyCount = 2;
+        for (var i = 0; i < enemyCount; i++) {
+            var enemy = document.createElement("div");
+            enemy.className = "enemy";
+            enemy.style.top = Math.floor(Math.random() * 0) - "px";
+            enemy.style.left = Math.floor(Math.random() * 1) + "px";
+            document.body.appendChild(enemy);
+            enemies.push(enemy);
+        }
+
+
+
+
+
+        var bar1 = document.getElementById("bar1");
+        var bar2 = document.getElementById("bar2");
+        var characterX = Math.floor(Math.random() * (gameArea.offsetWidth - character.offsetWidth));
+        var characterY = Math.floor(Math.random() * (gameArea.offsetHeight - character.offsetHeight));
+        var characterSpeedX = Math.floor(Math.random() * 1) + 6;
+        var characterSpeedY = Math.floor(Math.random() * 1) + 6;
+        var characterDirectionX = Math.random() < 0.5 ? -1 : 1;
+        var characterDirectionY = Math.random() < 0.5 ? -1 : 1;
+
+        function movecharacter() {
+            characterX += characterSpeedX * characterDirectionX;
+            characterY += characterSpeedY * characterDirectionY;
+            if (characterX < 0 || characterX > gameArea.offsetWidth - character.offsetWidth) {
+                characterDirectionX *= -1;
+            }
+            if (characterY < 0 || characterY > gameArea.offsetHeight - character.offsetHeight) {
+                characterDirectionY *= -1;
+            }
+            character.style.left = characterX + "px";
+            character.style.top = characterY + "px";
+            if (characterY + character.offsetHeight >= bar1.offsetTop && characterY <= bar1.offsetTop + bar1.offsetHeight) {
+                if (characterX <= bar1.offsetWidth) {
+                    characterDirectionX = 1;
+                     score++;
+
+                }
+            }
+
+
+           function moveEnemies() {
+            for (var i = 0; i < enemies.length; i++) {
+                var enemy = enemies[i];
+                enemy.style.bottom = parseInt(enemy.style.bottom) + 10 + "px";
+                if (parseInt(enemy.style.bottom) < 0) {
+                    enemy.remove();
+                    enemies.splice(i, 1);
+                    i--;
+                }
+            }
+        }
+        function createEnemy() {
+            var enemy = document.createElement("div");
+            enemy.className = "enemy";
+            enemy.style.left = Math.floor(Math.random() * 800) + "px";
+            enemy.style.bottom = "500px";
+            document.getElementById("gameArea").appendChild(enemy);
+            enemies.push(enemy);
+        }
+
+
+            for (var i = 0; i < enemies.length; i++) {
+                var enemy = enemies[i];
+                if (collision(character, enemy)) {
+                    enemy.style.display = "none";
+
+                    score += 1;
+                         scoreElement.innerHTML = "Score: " + score;
+                    if (score === 100) {
+                        window.location.href = "index+2.html";
+                    }
+                }
+            }
+
+
+
+        function collision(character, enemy) {
+            var characterRect = character.getBoundingClientRect();
+            var enemyRect = enemy.getBoundingClientRect();
+            return !(
+                characterRect.bottom < enemyRect.top ||
+                characterRect.top > enemyRect.bottom ||
+                characterRect.right < enemyRect.left ||
+                characterRect.left > enemyRect.right
+            );
+        }
+
+
+            requestAnimationFrame(movecharacter);
+        }
+        movecharacter();
+    </script>
+
+
+
+
+
+
+</body>
+</html>
